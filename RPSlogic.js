@@ -45,16 +45,36 @@ function  playRound (playerSelection, computerSelection  )
  }
 
 
- function game(){
 
-    let playerWins = 0;
-    let computerWins = 0;
+ let buttonsDiv = document.querySelector("#buttonsDiv");
+
+ let buttonRock = document.querySelector("#Rock");
+ let buttonPaper = document.querySelector("#Paper");
+ let buttonScissors = document.querySelector("#Scissors");
+ 
+
+var resultsDiv = document.querySelector("#resultsDiv");
+
+var resultsTextNode = document.createTextNode("");
+resultsDiv.appendChild(resultsTextNode);
+
+let playerWins = 0;
+let computerWins = 0;
+let winnerAnnouncement = "";
+
+ buttonsDiv.addEventListener('click', (event) => {
+   
+    let target = event.target;
+    if (target.type == "button")
+    {
+
     let playerSelection = "";
     let computerSelection = "";
     let roundResult = "";
-    for (let i = 0; i < 5; i++) {
+
         computerSelection = getComputerChoice();
-        playerSelection = prompt("Type rock, paper or scissors")
+        playerSelection = target.value;
+        
         roundResult = playRound(playerSelection, computerSelection);
         if (roundResult.includes("Win"))
         {
@@ -66,23 +86,26 @@ function  playRound (playerSelection, computerSelection  )
             computerWins+= 1;
 
         }
-        console.log(roundResult);
 
-    }
+        if (playerWins == 5)
+        {
+            winnerAnnouncement = "\n Player won with 5 wins!";
 
-    if (playerWins == computerWins )
-    {
-        console.log("The game has ended, and you tied.")
-    }
-    if (playerWins > computerWins )
-    {
-        console.log("The game has ended, and you won.")
-    }
-    if (playerWins < computerWins )
-    {
-        console.log("The game has ended, and you lost.")
-    }
+        }
 
- }
+        else if (playerWins == 5)
+        {
+            computerWins = "\n Computer won with 5 wins!";
 
- game();
+        }
+
+        resultsTextNode.textContent = roundResult + "\n \n Player wins: " + playerWins + "\n Computer wins: " + computerWins + winnerAnnouncement;
+
+      }
+
+
+});
+
+
+
+
